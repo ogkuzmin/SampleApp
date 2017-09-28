@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name" translatable="false">SampleApp</string>
+    <string name="login_button_title">Login</string>
+</resources>
