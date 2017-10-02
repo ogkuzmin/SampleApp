@@ -4,4 +4,10 @@
     <dimen name="edit_text_width_login_activity">240dp</dimen>
     <dimen name="huge_button_height_size">48dp</dimen>
     <dimen name="edit_text_top_bottom_padding">8dp</dimen>
+    <dimen name="list_item_height_size">72dp</dimen>
+    <dimen name="list_item_icon_size">40dp</dimen>
+    <dimen name="left_right_layout_margin">16dp</dimen>
+    <dimen name="between_items_margin">8dp</dimen>
+    <dimen name="text_size_in_list_item">18sp</dimen>
+    <dimen name="max_line_numbers_in_item">2</dimen>
 </resources>

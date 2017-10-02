@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface SampleRepo {
 
+    interface Listener {
+        void onRepoChanged();
+    }
+
     List<SampleEntity> getAll();
     SampleEntity getById(int id);
     void insert(SampleEntity entity);

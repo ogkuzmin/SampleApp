@@ -1,27 +1,35 @@
 package com.example.devnull.sampleapp.presentation.SampleListUi;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.example.devnull.sampleapp.domain.SampleEntity;
+import com.hannesdorfmann.mosby3.mvp.lce.MvpLceFragment;
 
 import java.util.List;
 
-public class SampleListFragment extends Fragment implements SampleListView {
+public class SampleListFragment extends
+        MvpLceFragment<RelativeLayout, List<SampleEntity>, SampleListView, SampleListPresenter>
+        implements SampleListView {
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
+    final SampleRecyclerViewAdapter adapter = new SampleRecyclerViewAdapter();
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
+        return null;
+    }
+
+    @Override
+    public SampleListPresenter createPresenter() {
+        return new SampleListPresenter();
     }
 
     @Override
@@ -41,11 +49,14 @@ public class SampleListFragment extends Fragment implements SampleListView {
 
     @Override
     public void setData(List<SampleEntity> data) {
-
+        adapter.setEntitiesList(data);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void loadData(boolean pullToRefresh) {
 
     }
+
+
 }
