@@ -1,4 +1,4 @@
-package com.example.devnull.sampleapp.presentation.SampleListUi;
+package com.example.devnull.sampleapp.presentation.samplelistui;
 
 import com.example.devnull.sampleapp.data.SampleRepo;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;

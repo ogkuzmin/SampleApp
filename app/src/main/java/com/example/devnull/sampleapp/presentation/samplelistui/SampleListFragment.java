@@ -1,10 +1,12 @@
-package com.example.devnull.sampleapp.presentation.SampleListUi;
+package com.example.devnull.sampleapp.presentation.samplelistui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.example.devnull.sampleapp.R;
 import com.example.devnull.sampleapp.domain.SampleEntity;
 import com.hannesdorfmann.mosby3.mvp.lce.MvpLceFragment;
 
@@ -16,6 +18,7 @@ public class SampleListFragment extends
 
     final SampleRecyclerViewAdapter adapter = new SampleRecyclerViewAdapter();
 
+    private RecyclerView mRecyclerView;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

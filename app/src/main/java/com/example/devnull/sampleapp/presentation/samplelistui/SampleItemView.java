@@ -1,6 +1,7 @@
-package com.example.devnull.sampleapp.presentation.SampleListUi;
+package com.example.devnull.sampleapp.presentation.samplelistui;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -37,11 +38,14 @@ public class SampleItemView extends RelativeLayout {
 
     public SampleItemView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        initUiControls(context);
     }
 
     public void setEntity(SampleEntity entity) {
         mEntity = entity;
-        mImageView.setImageDrawable(entity);
+        mImageView.setImageDrawable(getResourceDrawable());
+        mTextView.setText(mEntity.getName());
+        mCheckbox.setChecked(mEntity.isChecked());
     }
 
     private void initUiControls(Context context) {
@@ -49,5 +53,16 @@ public class SampleItemView extends RelativeLayout {
         mImageView = (ImageView) findViewById(R.id.icon);
         mTextView = (TextView) findViewById(R.id.text);
         mCheckbox = (CheckBox) findViewById(R.id.checkbox);
+    }
+
+    private Drawable getResourceDrawable() {
+        Drawable drawable;
+
+        if (mEntity.isChecked())
+            drawable = getContext().getDrawable(R.drawable.ic_cardiogram);
+        else
+            drawable = getContext().getDrawable(R.drawable.ic_heart);
+
+        return drawable;
     }
 }

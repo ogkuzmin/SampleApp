@@ -7,14 +7,17 @@ import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 
-final class SampleRealmDto extends RealmObject {
+public class SampleRealmDto extends RealmObject {
 
     @PrimaryKey
     private int mId;
     @Required
     private String mName;
-    @Required
     private boolean isChecked;
+
+    public SampleRealmDto() {
+
+    }
 
     public int getId() {
         return mId;

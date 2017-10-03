@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SampleApp</string>
+    <string name="app_name">Приложение пример</string>
     <string name="login_button_title">Войти</string>
+    <string-array name="navigation_drawer_items_name">
+        <item>Один</item>
+        <item>Два</item>
+        <item>Три</item>
+        <item>Четыре</item>
+    </string-array>
 </resources>

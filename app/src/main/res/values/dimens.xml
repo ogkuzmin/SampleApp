@@ -9,5 +9,5 @@
     <dimen name="left_right_layout_margin">16dp</dimen>
     <dimen name="between_items_margin">8dp</dimen>
     <dimen name="text_size_in_list_item">18sp</dimen>
-    <dimen name="max_line_numbers_in_item">2</dimen>
+    <integer name="max_line_numbers_in_item">2</integer>
 </resources>

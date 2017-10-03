@@ -17,7 +17,7 @@
         android:id="@+id/text"
         android:textSize="@dimen/text_size_in_list_item"
         android:ellipsize="end"
-        android:maxLines="@dimen/max_line_numbers_in_item"
+        android:maxLines="@integer/max_line_numbers_in_item"
         android:layout_marginRight="@dimen/between_items_margin"
         android:layout_marginTop="@dimen/left_right_layout_margin"
         android:layout_marginBottom="@dimen/left_right_layout_margin"
