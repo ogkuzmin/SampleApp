@@ -8,6 +8,7 @@
     <dimen name="list_item_icon_size">40dp</dimen>
     <dimen name="left_right_layout_margin">16dp</dimen>
     <dimen name="between_items_margin">8dp</dimen>
-    <dimen name="text_size_in_list_item">18sp</dimen>
+    <dimen name="primary_text_size">14sp</dimen>
     <integer name="max_line_numbers_in_item">2</integer>
+    <dimen name="navigation_drawer_list_item_height">48dp</dimen>
 </resources>
