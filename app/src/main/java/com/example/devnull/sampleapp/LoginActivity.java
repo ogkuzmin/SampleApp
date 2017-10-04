@@ -29,7 +29,7 @@ public class LoginActivity extends Activity {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setCancelable(false);
         dialogBuilder.setView(R.layout.progress_dialog_with_login);
-        mAlertDialog = dialogBuilder.show()
+        mAlertDialog = dialogBuilder.show();
     }
 
     private void dismissDialogAndStartNavigationBarActivity() {

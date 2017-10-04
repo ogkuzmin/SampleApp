@@ -9,7 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,10 +23,13 @@ import com.example.devnull.sampleapp.presentation.samplelistui.SampleListFragmen
 
 public class NavigationDrawerActivity extends AppCompatActivity {
 
+    private final static String LOG_TAG = NavigationDrawerActivity.class.getSimpleName();
+
     private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private FrameLayout mContentFrameLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     private int mSelectedPosition;
     private static final String SELECTED_FRAGMENT_POSITION_KEY_NAME = "SELECTED_FRAGMENT_POSITION";
@@ -41,11 +46,22 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         // Set the adapter for the list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.navigation_drawer_element, mPlanetTitles));
+                R.layout.navigation_drawer_element, R.id.navigation_item_text_view, mPlanetTitles));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        mSelectedPosition = savedInstanceState.getInt(SELECTED_FRAGMENT_POSITION_KEY_NAME, 1);
+        if (savedInstanceState != null) {
+            mSelectedPosition = savedInstanceState.getInt(SELECTED_FRAGMENT_POSITION_KEY_NAME, 1);
+        } else {
+            mSelectedPosition = 1;
+        }
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_bar_menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -78,6 +94,9 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     }
 
     private void initFragmentByPosition(int position) {
+
+        Log.v(LOG_TAG, "::initFragmentByPosition() with position " + position);
+
         Fragment fragment = null;
 
         switch (position) {
@@ -95,15 +114,21 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.content_frame, fragment)
-                .addToBackStack(null).commit();
+        fragmentTransaction.replace(R.id.content_frame, fragment).commit();
+        // Highlight the selected item, update the title, and close the drawer
+
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mDrawerList);
+        getSupportActionBar().setTitle(mPlanetTitles[position - 1]);
     }
 
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {;
             initFragmentByPosition(position);
         }
     }
+
+
 }

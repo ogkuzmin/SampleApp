@@ -5,12 +5,17 @@ import com.example.devnull.sampleapp.domain.SampleEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class SampleRepoImpl implements SampleRepo {
 
     private static final String ID_FILED_NAME = "mId";
+
+    @Inject
+    public SampleRepoImpl() { }
 
     @Override
     public List<SampleEntity> getAll() {

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +12,24 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.devnull.sampleapp.R;
+import com.example.devnull.sampleapp.data.SampleRepo;
+import com.example.devnull.sampleapp.di.DaggerSampleRepoComponent;
+import com.example.devnull.sampleapp.di.SampleRepoComponent;
 import com.example.devnull.sampleapp.domain.SampleEntity;
 import com.hannesdorfmann.mosby3.mvp.lce.MvpLceFragment;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class SampleListFragment extends
-        MvpLceFragment<RelativeLayout, List<SampleEntity>, SampleListView, SampleListPresenter>
+        MvpLceFragment<RecyclerView, List<SampleEntity>, SampleListView, SampleListPresenter>
         implements SampleListView {
+
+    private static final String LOG_TAG = SampleListFragment.class.getSimpleName();
 
     final SampleRecyclerViewAdapter adapter = new SampleRecyclerViewAdapter();
 
-    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private LinearLayout mLoadingLayout;
@@ -30,24 +37,27 @@ public class SampleListFragment extends
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.sample_list_fragment_layout, container);
+        Log.v(LOG_TAG, "::onCreateView()");
+        return inflater.inflate(R.layout.sample_list_fragment_layout, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.sample_list_recycler_view);
         mAdapter = new SampleRecyclerViewAdapter();
         mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
-        mLoadingLayout = (LinearLayout) view.findViewById(R.id.progress_dialog_container);
+        contentView.setLayoutManager(mLayoutManager);
+        contentView.setAdapter(mAdapter);
+
+        Log.v(LOG_TAG, "::onViewCreated()");
     }
 
     @Override
     public void onResume() {
         super.onResume();
         showLoading(false);
+        presenter.requestDataAndSetToView();
+        Log.v(LOG_TAG, "::onResume()");
     }
 
     @Override
@@ -68,6 +78,7 @@ public class SampleListFragment extends
     @Override
     public void showContent() {
         adapter.notifyDataSetChanged();
+        dismissProgressBarAndShowRecyclerView();
     }
 
     @Override
@@ -87,13 +98,13 @@ public class SampleListFragment extends
     }
 
     private void showProgressBar() {
-        mRecyclerView.setVisibility(View.GONE);
-        mLoadingLayout.setVisibility(View.VISIBLE);
+        contentView.setVisibility(View.GONE);
+        loadingView.setVisibility(View.VISIBLE);
     }
 
     private void dismissProgressBarAndShowRecyclerView() {
-        mLoadingLayout.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.VISIBLE);
+        loadingView.setVisibility(View.GONE);
+        contentView.setVisibility(View.VISIBLE);
     }
 
 }
