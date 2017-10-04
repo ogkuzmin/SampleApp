@@ -8,4 +8,5 @@
         <item>Три</item>
         <item>Четыре</item>
     </string-array>
+    <string name="progress_dialog_title">Пожалуйста подождите, производится логин...</string>
 </resources>

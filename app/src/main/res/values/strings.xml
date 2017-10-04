@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">SampleApp</string>
+    <string name="app_name">SampleApp</string>
     <string name="login_button_title">Login</string>
     <string-array name="navigation_drawer_items_name">
         <item>One</item>
@@ -7,4 +7,5 @@
         <item>Three</item>
         <item>Four</item>
     </string-array>
+    <string name="progress_dialog_title">Please wait, login is in progress...</string>
 </resources>

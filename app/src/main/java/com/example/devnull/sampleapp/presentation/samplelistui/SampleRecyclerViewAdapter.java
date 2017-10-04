@@ -38,8 +38,12 @@ public class SampleRecyclerViewAdapter extends RecyclerView.Adapter<SampleViewHo
     }
 
     protected static final class SampleViewHolder extends RecyclerView.ViewHolder {
+
+        private SampleItemView mItemView;
+
         public SampleViewHolder(View itemView) {
             super(itemView);
+            mItemView = (SampleItemView) itemView;
         }
     }
 }

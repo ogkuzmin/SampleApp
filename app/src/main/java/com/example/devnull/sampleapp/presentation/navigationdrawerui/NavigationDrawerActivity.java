@@ -26,6 +26,9 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     private ListView mDrawerList;
     private FrameLayout mContentFrameLayout;
 
+    private int mSelectedPosition;
+    private static final String SELECTED_FRAGMENT_POSITION_KEY_NAME = "SELECTED_FRAGMENT_POSITION";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +44,14 @@ public class NavigationDrawerActivity extends AppCompatActivity {
                 R.layout.navigation_drawer_element, mPlanetTitles));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        mSelectedPosition = savedInstanceState.getInt(SELECTED_FRAGMENT_POSITION_KEY_NAME, 1);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        initFragmentByPosition(mSelectedPosition);
     }
 
     @Override
@@ -61,6 +67,9 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        Bundle bundle = new Bundle();
+        bundle.putInt(SELECTED_FRAGMENT_POSITION_KEY_NAME, mSelectedPosition);
+        onSaveInstanceState(bundle);
     }
 
     @Override
