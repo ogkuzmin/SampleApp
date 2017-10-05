@@ -16,4 +16,5 @@ public interface SampleRepo {
     void insert(SampleEntity entity);
     void update(SampleEntity entity);
     void delete(SampleEntity entity);
+    void addListener(Listener listener);
 }

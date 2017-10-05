@@ -19,7 +19,7 @@
             </intent-filter-->
         </activity>
         <activity
-            android:name=".presentation.navigationdrawerui.NavigationDrawerActivity"
+            android:name=".presentation.navigationdrawer.NavigationDrawerActivity"
             android:screenOrientation="portrait">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />

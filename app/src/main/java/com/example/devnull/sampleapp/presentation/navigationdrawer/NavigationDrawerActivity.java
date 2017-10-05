@@ -1,7 +1,7 @@
 /*
  *  Copyright (c) Ascom (Sweden) AB. All rights reserved.
  */
-package com.example.devnull.sampleapp.presentation.navigationdrawerui;
+package com.example.devnull.sampleapp.presentation.navigationdrawer;
 
 
 import android.os.Bundle;
@@ -12,14 +12,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.example.devnull.sampleapp.R;
-import com.example.devnull.sampleapp.presentation.samplelistui.SampleListFragment;
+import com.example.devnull.sampleapp.presentation.samplelist.SampleListFragment;
 
 public class NavigationDrawerActivity extends AppCompatActivity {
 
@@ -28,7 +28,6 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     private String[] mPlanetTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private FrameLayout mContentFrameLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private int mSelectedPosition;
@@ -40,24 +39,29 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         setContentView(R.layout.navigation_drawer_layout);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mContentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
 
         mPlanetTitles = getResources().getStringArray(R.array.navigation_drawer_items_name);
 
         // Set the adapter for the list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.navigation_drawer_element, R.id.navigation_item_text_view, mPlanetTitles));
+                R.layout.navigation_drawer_element,
+                R.id.navigation_item_text_view,
+                mPlanetTitles));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         if (savedInstanceState != null) {
-            mSelectedPosition = savedInstanceState.getInt(SELECTED_FRAGMENT_POSITION_KEY_NAME, 1);
+            mSelectedPosition = savedInstanceState.getInt(SELECTED_FRAGMENT_POSITION_KEY_NAME, 0);
         } else {
-            mSelectedPosition = 1;
+            mSelectedPosition = 0;
         }
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.string.drawer_open, R.string.drawer_close);
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                R.string.drawer_open,
+                R.string.drawer_close);
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_bar_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -73,6 +77,13 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
     }
 
     @Override
@@ -93,6 +104,27 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                performClickBackButton();
+                return true;
+
+            default:
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void performClickBackButton() {
+
+            if(mDrawerLayout.isDrawerOpen(mDrawerList)){
+            mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+            mDrawerLayout.openDrawer(mDrawerList);
+        }
+    }
+
     private void initFragmentByPosition(int position) {
 
         Log.v(LOG_TAG, "::initFragmentByPosition() with position " + position);
@@ -100,15 +132,15 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         Fragment fragment = null;
 
         switch (position) {
-            case 1:
+            case 0:
                 fragment = new SampleListFragment();
+                break;
+            case 1:
+                fragment = new Fragment();
                 break;
             case 2:
                 fragment = new Fragment();
-                break;
             case 3:
-                fragment = new Fragment();
-            case 4:
                 fragment = new Fragment();
         }
 
@@ -119,7 +151,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
-        getSupportActionBar().setTitle(mPlanetTitles[position - 1]);
+        getSupportActionBar().setTitle(mPlanetTitles[position]);
     }
 
 

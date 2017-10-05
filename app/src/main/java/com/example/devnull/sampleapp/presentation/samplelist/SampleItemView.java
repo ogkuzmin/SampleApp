@@ -1,4 +1,4 @@
-package com.example.devnull.sampleapp.presentation.samplelistui;
+package com.example.devnull.sampleapp.presentation.samplelist;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

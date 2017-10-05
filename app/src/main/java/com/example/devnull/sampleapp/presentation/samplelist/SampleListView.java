@@ -1,4 +1,4 @@
-package com.example.devnull.sampleapp.presentation.samplelistui;
+package com.example.devnull.sampleapp.presentation.samplelist;
 
 import com.example.devnull.sampleapp.domain.SampleEntity;
 import com.hannesdorfmann.mosby3.mvp.lce.MvpLceView;

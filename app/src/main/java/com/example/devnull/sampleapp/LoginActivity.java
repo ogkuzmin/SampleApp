@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
-import com.example.devnull.sampleapp.presentation.navigationdrawerui.NavigationDrawerActivity;
+import com.example.devnull.sampleapp.presentation.navigationdrawer.NavigationDrawerActivity;
 
 public class LoginActivity extends Activity {
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();

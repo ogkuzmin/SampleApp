@@ -1,4 +1,4 @@
-package com.example.devnull.sampleapp.presentation.samplelistui;
+package com.example.devnull.sampleapp.presentation.samplelist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,21 +6,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.example.devnull.sampleapp.R;
-import com.example.devnull.sampleapp.data.SampleRepo;
-import com.example.devnull.sampleapp.di.DaggerSampleRepoComponent;
-import com.example.devnull.sampleapp.di.SampleRepoComponent;
 import com.example.devnull.sampleapp.domain.SampleEntity;
 import com.hannesdorfmann.mosby3.mvp.lce.MvpLceFragment;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 public class SampleListFragment extends
         MvpLceFragment<RecyclerView, List<SampleEntity>, SampleListView, SampleListPresenter>
@@ -48,6 +45,7 @@ public class SampleListFragment extends
         mLayoutManager = new LinearLayoutManager(getContext());
         contentView.setLayoutManager(mLayoutManager);
         contentView.setAdapter(mAdapter);
+        setHasOptionsMenu(true);
 
         Log.v(LOG_TAG, "::onViewCreated()");
     }
@@ -55,9 +53,29 @@ public class SampleListFragment extends
     @Override
     public void onResume() {
         super.onResume();
-        showLoading(false);
         presenter.requestDataAndSetToView();
         Log.v(LOG_TAG, "::onResume()");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.sample_list_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+
+            case R.id.add_action_menu:
+                presenter.startAddingActivity(getContext());
+                return true;
+
+            default:
+        }
+
+        return false;
     }
 
     @Override

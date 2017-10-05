@@ -1,4 +1,4 @@
-package com.example.devnull.sampleapp.presentation.samplelistui;
+package com.example.devnull.sampleapp.presentation.samplelist;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,7 +8,7 @@ import com.example.devnull.sampleapp.domain.SampleEntity;
 
 import java.util.List;
 
-import static com.example.devnull.sampleapp.presentation.samplelistui.SampleRecyclerViewAdapter.SampleViewHolder;
+import static com.example.devnull.sampleapp.presentation.samplelist.SampleRecyclerViewAdapter.SampleViewHolder;
 
 
 public class SampleRecyclerViewAdapter extends RecyclerView.Adapter<SampleViewHolder> {

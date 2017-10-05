@@ -8,6 +8,11 @@
         <item>Four</item>
     </string-array>
     <string name="progress_dialog_title">Please wait, login is in progress...</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="menu_add_title">Add</string>
+    <string name="done_button_title">Done</string>
+    <string name="revert_button_title">Revert</string>
+    <string name="add_new_item_activity_title">Add a new item</string>
+    <string name="edit_item_activity_title">Edit an item</string>
 </resources>

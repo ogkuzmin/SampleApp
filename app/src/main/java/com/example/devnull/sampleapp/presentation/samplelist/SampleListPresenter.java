@@ -1,12 +1,15 @@
-package com.example.devnull.sampleapp.presentation.samplelistui;
+package com.example.devnull.sampleapp.presentation.samplelist;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.AnyThread;
 import android.support.annotation.UiThread;
+import android.util.Log;
 
 import com.example.devnull.sampleapp.data.SampleRepo;
 import com.example.devnull.sampleapp.di.DaggerSampleRepoComponent;
-import com.example.devnull.sampleapp.di.SampleRepoComponent;
 import com.example.devnull.sampleapp.domain.SampleEntity;
+import com.example.devnull.sampleapp.presentation.addnewsampleitem.EditOrAddItemActivity;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import java.util.List;
@@ -20,12 +23,14 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SampleListPresenter extends MvpBasePresenter<SampleListView> implements SampleRepo.Listener{
 
+    private static final String LOG_TAG = SampleListPresenter.class.getSimpleName();
+
     @Inject
     SampleRepo repo;
 
     public SampleListPresenter() {
-        SampleRepoComponent repoComponent = DaggerSampleRepoComponent.builder().build();
-        repo = repoComponent.provideRepo();
+        DaggerSampleRepoComponent.builder().build().inject(this);
+        repo.s
     }
 
     @Override
@@ -33,8 +38,9 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
         requestDataAndSetToView();
     }
 
-    @AnyThread
+    @UiThread
     public void requestDataAndSetToView() {
+        getView().showLoading(false);
         Single.just(repo.getAll())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -50,5 +56,12 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
 
         view.setData(data);
         view.showContent();
+    }
+
+    @UiThread
+    public void startAddingActivity(Context context) {
+        Intent intent = new Intent(context, EditOrAddItemActivity.class);
+        context.startActivity(intent);
+        Log.d(LOG_TAG, "::startAddingActivity()");
     }
 }
