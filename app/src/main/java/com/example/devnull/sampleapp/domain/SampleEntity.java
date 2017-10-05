@@ -4,7 +4,7 @@ public class SampleEntity {
 
     private final int mId;
     private String mName;
-    private boolean isChecked;
+    private boolean isChecked = false;
 
     public SampleEntity(int id) {
         mId = id;

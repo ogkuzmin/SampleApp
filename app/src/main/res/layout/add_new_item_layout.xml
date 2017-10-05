@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="81dp">
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
 
     <EditText
         android:id="@+id/title_edit_text"
+        android:layout_width="@dimen/length_edit_text"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:inputType="textPersonName"
+        android:text="Name"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteX="72dp"
-        tools:layout_editor_absoluteY="88dp" />
+        android:id="@+id/helper_text_title"
+        android:text="@string/edit_text_add_item_help_title"
+        android:layout_alignLeft="@id/title_edit_text"
+        android:layout_below="@id/title_edit_text"
+        android:paddingBottom="@dimen/padding_between_button_and_text"/>
 
     <Button
         android:id="@+id/button_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/done_button_title"
-        tools:layout_editor_absoluteX="212dp"
-        tools:layout_editor_absoluteY="149dp" />
+        android:layout_below="@id/helper_text_title"
+        android:layout_alignRight="@id/title_edit_text"/>
 
     <Button
         android:id="@+id/button_revert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/revert_button_title"
-        tools:layout_editor_absoluteX="212dp"
-        tools:layout_editor_absoluteY="207dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_below="@id/button_done"
+        android:layout_alignRight="@id/title_edit_text"/>
+
+    </RelativeLayout>
+</RelativeLayout>

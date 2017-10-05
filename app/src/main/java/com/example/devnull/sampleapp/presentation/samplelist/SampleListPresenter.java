@@ -2,12 +2,12 @@ package com.example.devnull.sampleapp.presentation.samplelist;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.AnyThread;
 import android.support.annotation.UiThread;
 import android.util.Log;
 
 import com.example.devnull.sampleapp.data.SampleRepo;
 import com.example.devnull.sampleapp.di.DaggerSampleRepoComponent;
+import com.example.devnull.sampleapp.di.SampleRepoComponent;
 import com.example.devnull.sampleapp.domain.SampleEntity;
 import com.example.devnull.sampleapp.presentation.addnewsampleitem.EditOrAddItemActivity;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
@@ -29,8 +29,9 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
     SampleRepo repo;
 
     public SampleListPresenter() {
-        DaggerSampleRepoComponent.builder().build().inject(this);
-        repo.s
+        SampleRepoComponent component = DaggerSampleRepoComponent.builder().build();
+        component.inject(this);
+        Log.d(LOG_TAG, "Constructor");
     }
 
     @Override

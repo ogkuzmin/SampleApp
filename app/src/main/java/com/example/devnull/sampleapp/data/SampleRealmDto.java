@@ -1,5 +1,7 @@
 package com.example.devnull.sampleapp.data;
 
+import android.support.annotation.NonNull;
+
 import com.example.devnull.sampleapp.domain.SampleEntity;
 
 import io.realm.RealmObject;
@@ -7,7 +9,11 @@ import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 
-public class SampleRealmDto extends RealmObject {
+public class SampleRealmDto extends RealmObject implements Comparable<SampleRealmDto> {
+
+    public static final String ID_FIELD_NAME = "mId";
+    public static final String NAME_FIELD_NAME = "mName";
+    public static final String IS_CHECKED_FIELD_NAME = "isChecked";
 
     @PrimaryKey
     private int mId;
@@ -29,6 +35,11 @@ public class SampleRealmDto extends RealmObject {
 
     public boolean isChecked() {
         return isChecked;
+    }
+
+    @Override
+    public int compareTo(@NonNull SampleRealmDto sampleRealmDto) {
+        return (mId - sampleRealmDto.mId);
     }
 
     static SampleEntity createEntity(SampleRealmDto dto) {

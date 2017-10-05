@@ -11,8 +11,10 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.example.devnull.sampleapp.presentation.addnewsampleitem.EditOrAddItemView.SAMPLE_ITEM_ID_KEY;
@@ -20,6 +22,9 @@ import static com.example.devnull.sampleapp.presentation.addnewsampleitem.EditOr
 public class EditOrAddItemPresenter extends MvpBasePresenter<EditOrAddItemView> {
 
     private static final int DEFAULT_ID_VALUE = -1;
+
+    private int mId;
+    private SampleEntity mData;
 
     @Inject
     SampleRepo mRepo;
@@ -32,12 +37,16 @@ public class EditOrAddItemPresenter extends MvpBasePresenter<EditOrAddItemView> 
     public void loadData(Bundle bundle) {
 
         getView().showLoading();
-        int id = bundle.getInt(SAMPLE_ITEM_ID_KEY, DEFAULT_ID_VALUE);
 
-        if (id == DEFAULT_ID_VALUE) {
+        mId = DEFAULT_ID_VALUE;
+
+        if (bundle != null)
+            bundle.getInt(SAMPLE_ITEM_ID_KEY, DEFAULT_ID_VALUE);
+
+        if (mId == DEFAULT_ID_VALUE) {
             setDataToViewAndShowContent(null);
         } else {
-            Observable.just(mRepo.getById(id)).
+            Observable.just(mRepo.getById(mId)).
                     subscribeOn(Schedulers.newThread()).
                     observeOn(AndroidSchedulers.mainThread()).
                     subscribe(data -> setDataToViewAndShowContent(data));
@@ -46,7 +55,38 @@ public class EditOrAddItemPresenter extends MvpBasePresenter<EditOrAddItemView> 
 
     @UiThread
     public void setDataToViewAndShowContent(@Nullable SampleEntity data) {
+        mData = data;
         getView().setData(data);
         getView().showContent();
+    }
+
+    public void performDoneButton() {
+        final String enteredText = getView().getEnteredText();
+        Observable.just(mRepo.getMaxId())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation())
+                .map( (max) -> {
+                    SampleEntity entity = new SampleEntity(max + 1);
+                    entity.setName(enteredText);
+                    return mRepo.insert(entity);})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> getView().closeView());
+    }
+
+    public void performRevertButton() {
+        getView().closeView();
+    }
+
+    public void performBackButton() {
+        String entered = getView().getEnteredText();
+        if (mId == DEFAULT_ID_VALUE) {
+            if (entered != null) {
+                getView().showSaveDialog();
+            }
+        } else {
+            if (!mData.getName().equals(entered)) {
+                getView().showSaveDialog();
+            }
+        }
     }
 }

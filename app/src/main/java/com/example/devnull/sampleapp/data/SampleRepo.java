@@ -16,5 +16,6 @@ public interface SampleRepo {
     void insert(SampleEntity entity);
     void update(SampleEntity entity);
     void delete(SampleEntity entity);
+    int getMaxId();
     void addListener(Listener listener);
 }

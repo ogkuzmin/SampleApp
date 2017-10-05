@@ -14,4 +14,7 @@ public interface EditOrAddItemView extends MvpView {
     void setData(SampleEntity entity);
     void showLoading();
     void showContent();
+    String getEnteredText();
+    void showSaveDialog();
+    void closeView();
 }

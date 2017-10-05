@@ -8,6 +8,8 @@
         <item name="android:colorPrimary">@color/primary_material_dark</item>
         <item name="android:colorForeground">@android:color/background_dark</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <!--item name="windowActionBar">true</item>
+        <item name="actionBarWidgetTheme">@android:style/Widget.ActionBar</item-->
     </style>
 
 </resources>

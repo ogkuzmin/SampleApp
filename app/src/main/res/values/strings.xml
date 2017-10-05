@@ -14,5 +14,10 @@
     <string name="done_button_title">Done</string>
     <string name="revert_button_title">Revert</string>
     <string name="add_new_item_activity_title">Add a new item</string>
+    <string name="edit_text_add_item_help_title">Name of the item</string>
     <string name="edit_item_activity_title">Edit an item</string>
+    <string name="save_dialog_title">Save data</string>
+    <string name="save_dialog_msg">Are you sure that you don\'t want to save entered data?</string>
+    <string name="save_button_dialog_title">Save</string>
+    <string name="cancel_button_dialog_title">Cancel</string>
 </resources>

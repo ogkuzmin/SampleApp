@@ -11,7 +11,10 @@
     <string name="progress_dialog_title">Пожалуйста подождите, производится логин...</string>
     <string name="menu_add_title">Добавить</string>
     <string name="done_button_title">Сохранить</string>
-    <string name="revert_button_title">Отмена</string>
     <string name="add_new_item_activity_title">Добавление нового элемента</string>
     <string name="edit_item_activity_title">Изменение существующего элемента</string>
+    <string name="edit_text_add_item_help_title">Имя элемента</string>
+    <string name="revert_button_title">Отменить</string>
+    <string name="save_dialog_msg">Сохранить введенные данные</string>
+    <string name="save_dialog_title">Вы уверены, что не хотите сохранить введенные данные?</string>
 </resources>

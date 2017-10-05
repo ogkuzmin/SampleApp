@@ -21,4 +21,8 @@
     <dimen name="navigation_drawer_list_item_height">48dp</dimen>
     <dimen name="padding_top_bottom_navigation_drawer_element">16dp</dimen>
     <dimen name="navigation_drawer_item_text_size">20sp</dimen>
+
+    <dimen name="padding_between_edit_text_and_helper_text">8dp</dimen>
+    <dimen name="padding_between_button_and_text">24dp</dimen>
+    <dimen name="length_edit_text">240dp</dimen>
 </resources>

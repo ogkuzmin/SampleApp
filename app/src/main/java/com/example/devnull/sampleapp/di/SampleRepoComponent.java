@@ -1,7 +1,10 @@
 package com.example.devnull.sampleapp.di;
 
 import com.example.devnull.sampleapp.data.SampleRepo;
+import com.example.devnull.sampleapp.presentation.addnewsampleitem.EditOrAddItemPresenter;
+import com.example.devnull.sampleapp.presentation.samplelist.SampleListPresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
+import com.hannesdorfmann.mosby3.mvp.MvpView;
 
 import javax.inject.Singleton;
 
@@ -14,5 +17,7 @@ public interface SampleRepoComponent {
 
     SampleRepo provideRepo();
 
-    void inject(Object object);
+    void inject(SampleListPresenter presenter);
+
+    void inject(EditOrAddItemPresenter presenter);
 }
