@@ -1,6 +1,6 @@
 package com.example.devnull.sampleapp.presentation.addnewsampleitem;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -17,7 +17,7 @@ public class EditOrAddItemActivity extends MvpActivity<EditOrAddItemView, EditOr
     private EditText mNameEditText;
     private Button mDoneButton;
     private Button mRevertButton;
-    private Bundle mBundle;
+    private Intent mIntent;
     private SampleEntity mEntity;
     private AlertDialog mAlertDialog;
 
@@ -25,7 +25,7 @@ public class EditOrAddItemActivity extends MvpActivity<EditOrAddItemView, EditOr
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        mBundle = bundle;
+        mIntent = getIntent();
 
         setContentView(R.layout.add_new_item_layout);
         mNameEditText = (EditText) findViewById(R.id.title_edit_text);
@@ -38,7 +38,7 @@ public class EditOrAddItemActivity extends MvpActivity<EditOrAddItemView, EditOr
     @Override
     public void onResume() {
         super.onResume();
-        presenter.loadData(mBundle);
+        presenter.loadData(mIntent);
     }
 
     @Override

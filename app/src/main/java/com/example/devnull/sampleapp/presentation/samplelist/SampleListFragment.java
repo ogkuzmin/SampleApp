@@ -66,7 +66,7 @@ public class SampleListFragment extends
         switch (item.getItemId()) {
 
             case R.id.add_action_menu:
-                presenter.startAddingActivity(getContext());
+                presenter.startAddingActivity(getContext(), null);
                 return true;
 
             default:

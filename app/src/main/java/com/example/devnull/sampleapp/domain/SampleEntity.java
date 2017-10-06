@@ -46,4 +46,12 @@ public class SampleEntity {
 
         return true;
     }
+
+    public void swapChecked() {
+        if (isChecked) {
+            isChecked = false;
+        } else {
+            isChecked = true;
+        }
+    }
 }

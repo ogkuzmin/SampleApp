@@ -33,7 +33,7 @@ public class SampleRecyclerViewAdapter extends RecyclerView.Adapter<SampleViewHo
     public SampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         SampleItemView itemView = (SampleItemView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.sample_item_layout, parent, false);
-        itemView.
+        itemView.setClickListener(mListener);
         return new SampleViewHolder(itemView);
     }
 

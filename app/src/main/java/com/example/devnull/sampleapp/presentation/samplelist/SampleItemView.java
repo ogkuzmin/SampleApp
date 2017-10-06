@@ -39,23 +39,31 @@ public class SampleItemView extends LinearLayout {
     public SampleItemView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         Log.d(LOG_TAG, "::constructor(Context context, @Nullable AttributeSet attrs, int defStyleAttr)");
-
     }
 
     public SampleItemView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         Log.d(LOG_TAG, "::constructor(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)");
+    }
 
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        initUiControls();
     }
 
     public void setEntity(SampleEntity entity) {
         Log.d(LOG_TAG, "setEntity " + entity);
-        initUiControls();
 
         mEntity = entity;
         mImageView.setImageDrawable(getResourceDrawable());
         mTextView.setText(mEntity.getName());
         mCheckbox.setChecked(mEntity.isChecked());
+    }
+
+    public void setClickListener(OnClickListener listener) {
+        mClickableContent.setOnClickListener(listener);
+        mCheckbox.setOnClickListener(listener);
     }
 
     public SampleEntity getEntity() {
@@ -78,5 +86,10 @@ public class SampleItemView extends LinearLayout {
             drawable = getContext().getDrawable(R.drawable.ic_heart);
 
         return drawable;
+    }
+
+    public void updateView() {
+        mCheckbox.setChecked(mEntity.isChecked());
+        mImageView.setImageDrawable(getResourceDrawable());
     }
 }

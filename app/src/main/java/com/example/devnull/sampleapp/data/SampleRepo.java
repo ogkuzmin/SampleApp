@@ -14,8 +14,8 @@ public interface SampleRepo {
     List<SampleEntity> getAll();
     SampleEntity getById(int id);
     boolean insert(SampleEntity entity);
-    void update(SampleEntity entity);
-    void delete(SampleEntity entity);
+    boolean update(SampleEntity entity);
+    boolean delete(SampleEntity entity);
     int getMaxId();
     void addListener(Listener listener);
 }

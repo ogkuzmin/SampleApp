@@ -18,9 +18,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.example.devnull.sampleapp.presentation.addnewsampleitem.EditOrAddItemView.SAMPLE_ITEM_ID_KEY;
 
 
 public class SampleListPresenter extends MvpBasePresenter<SampleListView> implements SampleRepo.Listener{
@@ -28,7 +31,7 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
     private static final String LOG_TAG = SampleListPresenter.class.getSimpleName();
 
     @Inject
-    SampleRepo repo;
+    SampleRepo mRepo;
 
     public SampleListPresenter() {
         SampleRepoComponent component = DaggerSampleRepoComponent.builder().build();
@@ -44,7 +47,7 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
     @UiThread
     public void requestDataAndSetToView() {
         getView().showLoading(false);
-        Single.just(repo.getAll())
+        Single.just(mRepo.getAll())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> postDataToView(data));
@@ -67,12 +70,18 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
     @UiThread
     public void startAddingActivity(Context context, SampleItemView itemView) {
         Intent intent = new Intent(context, EditOrAddItemActivity.class);
+
+        if (itemView != null) {
+            intent.putExtra(SAMPLE_ITEM_ID_KEY, itemView.getEntity().getId());
+            Log.d(LOG_TAG, "::startAddingActivity() put int extra " + itemView.getEntity().getId());
+        }
+
         context.startActivity(intent);
         Log.d(LOG_TAG, "::startAddingActivity()");
     }
 
     public void performClickOnItemView(View view) {
-        SampleItemView itemView = (SampleItemView) view.getRootView();
+        SampleItemView itemView = (SampleItemView) view.getParent();
 
         switch (view.getId()){
             case R.id.clickable_content_frame:
@@ -80,13 +89,20 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
                 break;
 
             case R.id.checkbox:
-                performUpdateEntity(itemView);
+                performUpdateEntityWithCheckBoxEvent(itemView);
                 break;
 
         }
     }
 
-    private void performUpdateEntity(SampleItemView itemView) {
+    private void performUpdateEntityWithCheckBoxEvent(final SampleItemView itemView) {
+        final SampleEntity entity = itemView.getEntity();
+        entity.swapChecked();
+        itemView.updateView();
 
+        Completable.fromAction(() -> mRepo.update(entity))
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 }

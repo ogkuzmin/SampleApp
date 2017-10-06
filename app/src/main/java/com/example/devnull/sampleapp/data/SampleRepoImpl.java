@@ -39,8 +39,9 @@ public class SampleRepoImpl implements SampleRepo {
     public SampleEntity getById(int id) {
         Realm realm = Realm.getDefaultInstance();
         SampleRealmDto dto = realm.where(SampleRealmDto.class).equalTo(SampleRealmDto.ID_FIELD_NAME, id).findFirst();
+        SampleEntity result = SampleRealmDto.createEntity(dto);
         realm.close();
-        return SampleRealmDto.createEntity(dto);
+        return result;
     }
 
     @Override
@@ -57,17 +58,18 @@ public class SampleRepoImpl implements SampleRepo {
     }
 
     @Override
-    public void update(SampleEntity entity) {
+    public boolean update(SampleEntity entity) {
         Realm realm = Realm.getDefaultInstance();
         SampleRealmDto dto = SampleRealmDto.createFromEntity(entity);
         realm.beginTransaction();
         realm.insertOrUpdate(dto);
         realm.commitTransaction();
         realm.close();
+        return true;
     }
 
     @Override
-    public void delete(SampleEntity entity) {
+    public boolean delete(SampleEntity entity) {
         Realm realm = Realm.getDefaultInstance();
         SampleRealmDto dto = SampleRealmDto.createFromEntity(entity);
         realm.beginTransaction();
@@ -75,6 +77,7 @@ public class SampleRepoImpl implements SampleRepo {
                 findAll().deleteFirstFromRealm();
         realm.commitTransaction();
         realm.close();
+        return true;
     }
 
     @Override
