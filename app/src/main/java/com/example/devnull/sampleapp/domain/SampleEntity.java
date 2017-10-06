@@ -29,4 +29,21 @@ public class SampleEntity {
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
+
+    @Override
+    public String toString() {
+        return "Entity with id " + mId + ", name " + mName + ", isChecked? " + isChecked;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        if (obj.getClass() != this.getClass())
+            return false;
+        if (((SampleEntity) obj).mId != mId)
+            return false;
+
+        return true;
+    }
 }

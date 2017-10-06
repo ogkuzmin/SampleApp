@@ -31,6 +31,7 @@ public class SampleRepoImpl implements SampleRepo {
             list.add(SampleRealmDto.createEntity(realmDto));
         }
         realm.close();
+        Log.d(LOG_TAG, "::getAll returns the list with size " + list.size());
         return list;
     }
 
@@ -43,13 +44,16 @@ public class SampleRepoImpl implements SampleRepo {
     }
 
     @Override
-    public void insert(SampleEntity entity) {
+    public boolean insert(SampleEntity entity) {
+        Log.d(LOG_TAG, "::insert() " + entity);
+
         Realm realm = Realm.getDefaultInstance();
         SampleRealmDto dto = SampleRealmDto.createFromEntity(entity);
         realm.beginTransaction();
         realm.insert(dto);
         realm.commitTransaction();
         realm.close();
+        return true;
     }
 
     @Override
@@ -78,8 +82,13 @@ public class SampleRepoImpl implements SampleRepo {
         int id;
         Realm realm = Realm.getDefaultInstance();
         RealmResults<SampleRealmDto> results = realm.where(SampleRealmDto.class).findAll();
-        id = results.max(SampleRealmDto.ID_FIELD_NAME).intValue();
+        Number number = results.max(SampleRealmDto.ID_FIELD_NAME);
+        if (number == null)
+            id = 0;
+        else
+            id = number.intValue();
         realm.close();
+        Log.d(LOG_TAG, "::getMaxId() returns " + id);
         return id;
     }
 

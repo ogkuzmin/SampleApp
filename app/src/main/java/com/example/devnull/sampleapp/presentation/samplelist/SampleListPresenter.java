@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.UiThread;
 import android.util.Log;
+import android.view.View;
 
+import com.example.devnull.sampleapp.R;
 import com.example.devnull.sampleapp.data.SampleRepo;
 import com.example.devnull.sampleapp.di.DaggerSampleRepoComponent;
 import com.example.devnull.sampleapp.di.SampleRepoComponent;
@@ -50,6 +52,9 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
 
     @UiThread
     private void postDataToView(List<SampleEntity> data) {
+
+        Log.d(LOG_TAG, "::postDataToView() posting list data with size " + data.size());
+
         SampleListView view = getView();
 
         if (view == null)
@@ -60,9 +65,28 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
     }
 
     @UiThread
-    public void startAddingActivity(Context context) {
+    public void startAddingActivity(Context context, SampleItemView itemView) {
         Intent intent = new Intent(context, EditOrAddItemActivity.class);
         context.startActivity(intent);
         Log.d(LOG_TAG, "::startAddingActivity()");
+    }
+
+    public void performClickOnItemView(View view) {
+        SampleItemView itemView = (SampleItemView) view.getRootView();
+
+        switch (view.getId()){
+            case R.id.clickable_content_frame:
+                startAddingActivity(view.getContext(), itemView);
+                break;
+
+            case R.id.checkbox:
+                performUpdateEntity(itemView);
+                break;
+
+        }
+    }
+
+    private void performUpdateEntity(SampleItemView itemView) {
+
     }
 }

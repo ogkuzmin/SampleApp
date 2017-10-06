@@ -13,7 +13,7 @@ public interface SampleRepo {
 
     List<SampleEntity> getAll();
     SampleEntity getById(int id);
-    void insert(SampleEntity entity);
+    boolean insert(SampleEntity entity);
     void update(SampleEntity entity);
     void delete(SampleEntity entity);
     int getMaxId();

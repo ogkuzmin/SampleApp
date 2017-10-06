@@ -44,7 +44,6 @@ public class EditOrAddItemActivity extends MvpActivity<EditOrAddItemView, EditOr
     @Override
     public void onBackPressed() {
         presenter.performBackButton();
-        super.onBackPressed();
     }
 
     @Override

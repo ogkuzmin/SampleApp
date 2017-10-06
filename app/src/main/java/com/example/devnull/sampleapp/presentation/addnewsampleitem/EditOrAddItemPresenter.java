@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -62,15 +63,22 @@ public class EditOrAddItemPresenter extends MvpBasePresenter<EditOrAddItemView> 
 
     public void performDoneButton() {
         final String enteredText = getView().getEnteredText();
-        Observable.just(mRepo.getMaxId())
+
+        final Function<Integer, Boolean> insertToDatabase = new Function<Integer, Boolean>() {
+            @Override
+            public Boolean apply(Integer max) throws Exception {
+                SampleEntity entity = new SampleEntity(max + 1);
+                entity.setName(enteredText);
+                return mRepo.insert(entity);
+            }
+        };
+
+        Single.just(mRepo.getMaxId())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-                .map( (max) -> {
-                    SampleEntity entity = new SampleEntity(max + 1);
-                    entity.setName(enteredText);
-                    return mRepo.insert(entity);})
+                .map(max -> insertToDatabase.apply(max))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> getView().closeView());
+                .subscribe((Boolean v) -> getView().closeView());
     }
 
     public void performRevertButton() {

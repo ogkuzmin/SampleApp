@@ -21,15 +21,12 @@ import java.util.List;
 
 public class SampleListFragment extends
         MvpLceFragment<RecyclerView, List<SampleEntity>, SampleListView, SampleListPresenter>
-        implements SampleListView {
+        implements SampleListView, View.OnClickListener {
 
     private static final String LOG_TAG = SampleListFragment.class.getSimpleName();
 
-    final SampleRecyclerViewAdapter adapter = new SampleRecyclerViewAdapter();
-
-    private RecyclerView.Adapter mAdapter;
+    private SampleRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private LinearLayout mLoadingLayout;
 
     @Nullable
     @Override
@@ -41,7 +38,7 @@ public class SampleListFragment extends
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter = new SampleRecyclerViewAdapter();
+        mAdapter = new SampleRecyclerViewAdapter(this);
         mLayoutManager = new LinearLayoutManager(getContext());
         contentView.setLayoutManager(mLayoutManager);
         contentView.setAdapter(mAdapter);
@@ -95,7 +92,7 @@ public class SampleListFragment extends
 
     @Override
     public void showContent() {
-        adapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
         dismissProgressBarAndShowRecyclerView();
     }
 
@@ -106,8 +103,7 @@ public class SampleListFragment extends
 
     @Override
     public void setData(List<SampleEntity> data) {
-        adapter.setEntitiesList(data);
-
+        mAdapter.setEntitiesList(data);
     }
 
     @Override
@@ -116,13 +112,19 @@ public class SampleListFragment extends
     }
 
     private void showProgressBar() {
+        Log.d(LOG_TAG, "::showProgressBar");
         contentView.setVisibility(View.GONE);
         loadingView.setVisibility(View.VISIBLE);
     }
 
     private void dismissProgressBarAndShowRecyclerView() {
+        Log.d(LOG_TAG, "::dismissProgressBarAndShowRecyclerView");
         loadingView.setVisibility(View.GONE);
         contentView.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onClick(View view) {
+        presenter.performClickOnItemView(view);
+    }
 }
