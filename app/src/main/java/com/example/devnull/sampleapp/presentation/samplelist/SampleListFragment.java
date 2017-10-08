@@ -3,6 +3,7 @@ package com.example.devnull.sampleapp.presentation.samplelist;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.example.devnull.sampleapp.R;
 import com.example.devnull.sampleapp.domain.SampleEntity;
@@ -21,12 +21,13 @@ import java.util.List;
 
 public class SampleListFragment extends
         MvpLceFragment<RecyclerView, List<SampleEntity>, SampleListView, SampleListPresenter>
-        implements SampleListView, View.OnClickListener {
+        implements SampleListView, View.OnClickListener, View.OnLongClickListener, PopupMenu.OnMenuItemClickListener {
 
     private static final String LOG_TAG = SampleListFragment.class.getSimpleName();
 
     private SampleRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private PopupMenu mPopupMenu;
 
     @Nullable
     @Override
@@ -38,7 +39,7 @@ public class SampleListFragment extends
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter = new SampleRecyclerViewAdapter(this);
+        mAdapter = new SampleRecyclerViewAdapter(this, this);
         mLayoutManager = new LinearLayoutManager(getContext());
         contentView.setLayoutManager(mLayoutManager);
         contentView.setAdapter(mAdapter);
@@ -72,6 +73,22 @@ public class SampleListFragment extends
             default:
         }
 
+        return false;
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit_action:
+                presenter.performEditAction();
+                return true;
+
+            case R.id.delete_action:
+                presenter.performDeleteAction();
+                return true;
+
+            default:
+        }
         return false;
     }
 
@@ -111,6 +128,15 @@ public class SampleListFragment extends
 
     }
 
+    @Override
+    public void showPopupMenu(SampleItemView itemView) {
+        Log.v(LOG_TAG, "::showPopupMenu()");
+        mPopupMenu = new PopupMenu(getContext(), itemView);
+        mPopupMenu.inflate(R.menu.item_popup_menu);
+        mPopupMenu.setOnMenuItemClickListener(this);
+        mPopupMenu.show();
+    }
+
     private void showProgressBar() {
         Log.d(LOG_TAG, "::showProgressBar");
         contentView.setVisibility(View.GONE);
@@ -126,5 +152,12 @@ public class SampleListFragment extends
     @Override
     public void onClick(View view) {
         presenter.performClickOnItemView(view);
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        Log.d(LOG_TAG, "::onLongClick()");
+        presenter.performLongClick(view);
+        return true;
     }
 }

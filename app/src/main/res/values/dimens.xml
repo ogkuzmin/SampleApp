@@ -10,6 +10,7 @@
     <dimen name="left_right_layout_margin">16dp</dimen>
     <dimen name="between_items_margin">8dp</dimen>
     <dimen name="primary_text_size">14sp</dimen>
+    <dimen name="secondary_text_size">16sp</dimen>
     <integer name="max_line_numbers_in_item">2</integer>
 
     <dimen name="padding_dialog_size">24dp</dimen>
@@ -20,9 +21,13 @@
 
     <dimen name="navigation_drawer_list_item_height">48dp</dimen>
     <dimen name="padding_top_bottom_navigation_drawer_element">16dp</dimen>
-    <dimen name="navigation_drawer_item_text_size">20sp</dimen>
+    <dimen name="medium_text_size">20sp</dimen>
 
-    <dimen name="padding_between_edit_text_and_helper_text">8dp</dimen>
+    <dimen name="default_content_padding">8dp</dimen>
     <dimen name="padding_between_button_and_text">24dp</dimen>
     <dimen name="length_edit_text">240dp</dimen>
+    
+    <dimen name="content_left_margin">72dp</dimen>
+    <dimen name="subtitle_top_margin">48dp</dimen>
+    <dimen name="content_right_margin">32dp</dimen>
 </resources>

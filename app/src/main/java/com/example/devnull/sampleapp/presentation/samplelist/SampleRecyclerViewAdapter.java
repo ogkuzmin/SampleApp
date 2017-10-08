@@ -20,9 +20,12 @@ public class SampleRecyclerViewAdapter extends RecyclerView.Adapter<SampleViewHo
 
     private List<SampleEntity> mEntities;
     private View.OnClickListener mListener;
+    private View.OnLongClickListener mLongListener;
 
-    public SampleRecyclerViewAdapter(View.OnClickListener clickListener) {
+    public SampleRecyclerViewAdapter(View.OnClickListener clickListener,
+                                     View.OnLongClickListener longClickListener) {
         mListener = clickListener;
+        mLongListener = longClickListener;
     }
 
     public void setEntitiesList(List<SampleEntity> entitiesList) {
@@ -34,6 +37,7 @@ public class SampleRecyclerViewAdapter extends RecyclerView.Adapter<SampleViewHo
         SampleItemView itemView = (SampleItemView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.sample_item_layout, parent, false);
         itemView.setClickListener(mListener);
+        itemView.setOnLongClickListener(mLongListener);
         return new SampleViewHolder(itemView);
     }
 

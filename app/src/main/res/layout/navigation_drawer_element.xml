@@ -11,7 +11,7 @@
         android:layout_marginLeft="@dimen/left_right_layout_margin"
         android:layout_centerVertical="true"
         android:text="Text"
-        android:textSize="@dimen/navigation_drawer_item_text_size"
+        android:textSize="@dimen/medium_text_size"
         android:layout_marginBottom="@dimen/padding_top_bottom_navigation_drawer_element"
         android:layout_marginTop="@dimen/padding_top_bottom_navigation_drawer_element"/>
 

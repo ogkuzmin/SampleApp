@@ -17,4 +17,13 @@
     <string name="revert_button_title">Отменить</string>
     <string name="save_dialog_msg">Сохранить введенные данные</string>
     <string name="save_dialog_title">Вы уверены, что не хотите сохранить введенные данные?</string>
+    <string name="edit_action_popup_title">Редактировать</string>
+    <string name="save_button_dialog_title">Сохранить</string>
+    <string name="cancel_button_dialog_title">Отменить</string>
+    <string name="delete_action_popup_title">Удалить</string>
+    <string name="language_preference_title">Выберите язык</string>
+    <string name="language_preference">Языки</string>
+    <string name="russian_language_value">Русский</string>
+    <string name="english_language_value">Английский</string>
+    <string name="default_language_value">По умолчанию</string>
 </resources>

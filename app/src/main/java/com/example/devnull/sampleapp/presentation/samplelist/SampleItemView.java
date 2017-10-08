@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,6 +60,12 @@ public class SampleItemView extends LinearLayout {
         mImageView.setImageDrawable(getResourceDrawable());
         mTextView.setText(mEntity.getName());
         mCheckbox.setChecked(mEntity.isChecked());
+    }
+
+    @Override
+    public void setOnLongClickListener(@Nullable OnLongClickListener l) {
+        mClickableContent.setLongClickable(true);
+        mClickableContent.setOnLongClickListener(l);
     }
 
     public void setClickListener(OnClickListener listener) {

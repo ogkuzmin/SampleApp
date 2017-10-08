@@ -33,6 +33,8 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
     @Inject
     SampleRepo mRepo;
 
+    private SampleItemView mLongClickedItemView;
+
     public SampleListPresenter() {
         SampleRepoComponent component = DaggerSampleRepoComponent.builder().build();
         component.inject(this);
@@ -104,5 +106,21 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
+    }
+
+    public void performLongClick(View view) {
+        mLongClickedItemView = (SampleItemView) view.getParent();
+        getView().showPopupMenu(mLongClickedItemView);
+    }
+
+    public void performEditAction() {
+        startAddingActivity(mLongClickedItemView.getContext(), mLongClickedItemView);
+    }
+
+    public void performDeleteAction() {
+        Completable.fromAction(() -> mRepo.delete(mLongClickedItemView.getEntity()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> requestDataAndSetToView());
     }
 }

@@ -6,4 +6,5 @@ import com.hannesdorfmann.mosby3.mvp.lce.MvpLceView;
 import java.util.List;
 
 public interface SampleListView extends MvpLceView<List<SampleEntity>> {
+    void showPopupMenu(SampleItemView itemView);
 }
