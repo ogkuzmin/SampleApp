@@ -4,4 +4,5 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
 
 
 public interface LanguagePreferenceView extends MvpView {
+    void showChangesAfterRebootDialog();
 }

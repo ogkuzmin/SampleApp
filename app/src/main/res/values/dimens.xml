@@ -9,9 +9,13 @@
     <dimen name="list_item_icon_size">40dp</dimen>
     <dimen name="left_right_layout_margin">16dp</dimen>
     <dimen name="between_items_margin">8dp</dimen>
+    <integer name="max_line_numbers_in_item">2</integer>
+
+
     <dimen name="primary_text_size">14sp</dimen>
     <dimen name="secondary_text_size">16sp</dimen>
-    <integer name="max_line_numbers_in_item">2</integer>
+    <dimen name="medium_text_size">20sp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
 
     <dimen name="padding_dialog_size">24dp</dimen>
     <dimen name="margin_between_items_dialog">20dp</dimen>
@@ -21,7 +25,6 @@
 
     <dimen name="navigation_drawer_list_item_height">48dp</dimen>
     <dimen name="padding_top_bottom_navigation_drawer_element">16dp</dimen>
-    <dimen name="medium_text_size">20sp</dimen>
 
     <dimen name="default_content_padding">8dp</dimen>
     <dimen name="padding_between_button_and_text">24dp</dimen>
@@ -30,4 +33,10 @@
     <dimen name="content_left_margin">72dp</dimen>
     <dimen name="subtitle_top_margin">48dp</dimen>
     <dimen name="content_right_margin">32dp</dimen>
+
+    <dimen name="standard_margin">16dp</dimen>
+
+    <integer name="max_line_numbers_in_quote">4</integer>
+
+    <dimen name="card_corner_radius">4dp</dimen>
 </resources>

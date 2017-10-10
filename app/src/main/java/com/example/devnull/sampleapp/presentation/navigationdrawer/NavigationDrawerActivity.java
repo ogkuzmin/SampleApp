@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.devnull.sampleapp.R;
+import com.example.devnull.sampleapp.presentation.languagepreference.LanguagePreferenceFragment;
 import com.example.devnull.sampleapp.presentation.samplelist.SampleListFragment;
 
 public class NavigationDrawerActivity extends AppCompatActivity {
@@ -141,7 +142,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
             case 2:
                 fragment = new Fragment();
             case 3:
-                fragment = new Fragment();
+                fragment = new LanguagePreferenceFragment();
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();

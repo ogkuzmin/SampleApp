@@ -20,5 +20,5 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/content_left_margin"
         android:layout_marginRight="@dimen/content_right_margin"
-        android:layout_below="@id/preference_title" />
+        android:layout_below="@id/preference_title"/>
 </RelativeLayout>
