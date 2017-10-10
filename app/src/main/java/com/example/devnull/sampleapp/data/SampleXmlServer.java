@@ -6,6 +6,7 @@ import org.simpleframework.xml.core.Persister;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -14,7 +15,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class SampleXmlServer {
 
-    private static final String URL = "http://storage.space-o.ru";
+    private static final String URL = "http://storage.space-o.ru/";
 
     private static SampleXmlServer INSTANCE;
     private final XmlServer mServer;
@@ -44,7 +45,7 @@ public class SampleXmlServer {
         mServer = api.create(XmlServer.class);
     }
 
-    public Observable<List<QuoteXmlDto>> getQuoteList() {
-        return mServer.quoteList();
+    public Single<ResultXml> getQuoteList() {
+        return mServer.resultXmlList();
     }
 }

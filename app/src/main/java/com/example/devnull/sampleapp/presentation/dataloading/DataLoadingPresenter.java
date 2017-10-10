@@ -7,6 +7,7 @@ import android.support.annotation.WorkerThread;
 import android.util.Log;
 
 import com.example.devnull.sampleapp.data.QuoteXmlDto;
+import com.example.devnull.sampleapp.data.ResultXml;
 import com.example.devnull.sampleapp.data.SampleXmlServer;
 import com.example.devnull.sampleapp.domain.QuoteEntity;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
@@ -15,9 +16,10 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observer;
 import io.reactivex.Single;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -28,27 +30,22 @@ public class DataLoadingPresenter extends MvpBasePresenter<DataLoadingView> {
 
     private SampleXmlServer mServer;
 
-    private final Observer<List<QuoteXmlDto>> mObserver = new Observer<List<QuoteXmlDto>>() {
-
-        private final List<QuoteXmlDto> results = new ArrayList<QuoteXmlDto>();
-
+    private final SingleObserver<ResultXml> mObserver = new SingleObserver<ResultXml>() {
         @Override
-        public void onSubscribe(Disposable subscription) {
+        public void onSubscribe(@NonNull Disposable d) {
+            Log.d(LOG_TAG, "SingleObserver::onSubscribe()");
         }
 
         @Override
-        public void onNext(List<QuoteXmlDto> quoteXmlDtos) {
-            results.addAll(quoteXmlDtos);
+        public void onSuccess(@NonNull ResultXml resultXml) {
+            Log.d(LOG_TAG, "SingleObserver::onSuccess()");
+            postDataToView(resultXml);
         }
 
         @Override
-        public void onError(Throwable throwable) {
-            getView().showError(throwable);
-        }
-
-        @Override
-        public void onComplete() {
-            postDataToView(results);
+        public void onError(@NonNull Throwable e) {
+            Log.d(LOG_TAG, "SingleObserver::onError() " + e.toString());
+            getView().showError(e);
         }
     };
 
@@ -57,8 +54,6 @@ public class DataLoadingPresenter extends MvpBasePresenter<DataLoadingView> {
     }
 
     public void loadData() {
-        getView().showLoading(false);
-
         mServer.getQuoteList()
                 .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
@@ -66,10 +61,11 @@ public class DataLoadingPresenter extends MvpBasePresenter<DataLoadingView> {
     }
 
     @WorkerThread
-    private void postDataToView(List<QuoteXmlDto> results) {
-        Log.d(LOG_TAG, "::postDataToView list size " + results.size());
+    private void postDataToView(ResultXml results) {
+        Log.d(LOG_TAG, "::postDataToView list size " + results.getQuotes().size() + ", totalPages "
+                + results.getTotalPages());
         List<QuoteEntity> viewResult = new ArrayList<QuoteEntity>();
-        for (QuoteXmlDto dto: results) {
+        for (QuoteXmlDto dto: results.getQuotes()) {
             viewResult.add(QuoteXmlDto.createQuoteEntityFromDto(dto));
         }
 

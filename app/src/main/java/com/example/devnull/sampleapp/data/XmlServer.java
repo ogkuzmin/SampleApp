@@ -1,11 +1,9 @@
 package com.example.devnull.sampleapp.data;
 
-import java.util.List;
-
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 
 public interface XmlServer {
-    @GET("/testXmlFeed.xml")
-    Observable<List<QuoteXmlDto>> quoteList();
+    @GET("testXmlFeed.xml")
+    Single<ResultXml> resultXmlList();
 }
