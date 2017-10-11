@@ -14,7 +14,7 @@ public class SampleRepoModule {
 
     @Provides
     @Singleton
-    static SampleRepo provideRepo() {
+    SampleRepo provideRepo() {
         return new SampleRepoImpl();
     }
 }

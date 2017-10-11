@@ -26,7 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 import static com.example.devnull.sampleapp.presentation.addnewsampleitem.EditOrAddItemView.SAMPLE_ITEM_ID_KEY;
 
 
-public class SampleListPresenter extends MvpBasePresenter<SampleListView> implements SampleRepo.Listener{
+public class SampleListPresenter extends MvpBasePresenter<SampleListView> {
 
     private static final String LOG_TAG = SampleListPresenter.class.getSimpleName();
 
@@ -39,11 +39,6 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
         SampleRepoComponent component = DaggerSampleRepoComponent.builder().build();
         component.inject(this);
         Log.d(LOG_TAG, "Constructor");
-    }
-
-    @Override
-    public void onRepoChanged() {
-        requestDataAndSetToView();
     }
 
     @UiThread
@@ -83,7 +78,7 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
     }
 
     public void performClickOnItemView(View view) {
-        SampleItemView itemView = (SampleItemView) view.getParent();
+        SampleItemView itemView = (SampleItemView) view.getParent().getParent();
 
         switch (view.getId()){
             case R.id.clickable_content_frame:
@@ -109,7 +104,7 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> implem
     }
 
     public void performLongClick(View view) {
-        mLongClickedItemView = (SampleItemView) view.getParent();
+        mLongClickedItemView = (SampleItemView) view.getParent().getParent();
         getView().showPopupMenu(mLongClickedItemView);
     }
 

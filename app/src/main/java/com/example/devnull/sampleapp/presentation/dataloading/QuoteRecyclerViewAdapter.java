@@ -3,7 +3,6 @@
  */
 package com.example.devnull.sampleapp.presentation.dataloading;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,7 @@ public class QuoteRecyclerViewAdapter extends RecyclerView.Adapter<CardViewViewH
 
     @Override
     public CardViewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CardView view = (CardView) LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.quote_item_layout, parent, false);
         CardViewViewHolder viewHolder = new CardViewViewHolder(view);
         return viewHolder;
@@ -36,7 +35,7 @@ public class QuoteRecyclerViewAdapter extends RecyclerView.Adapter<CardViewViewH
     @Override
     public void onBindViewHolder(CardViewViewHolder holder, int position) {
         QuoteEntity entity = mEntities.get(position);
-        TextView idTextView = (TextView) holder.mCardView.findViewById(R.id.id_text_view);
+        TextView idTextView = (TextView) holder.mRootView.findViewById(R.id.id_text_view);
         if (idTextView == null || !isEqualIdValues(idTextView, entity)) {
             holder.updateByQuoteEntity(entity);
         }
@@ -57,17 +56,17 @@ public class QuoteRecyclerViewAdapter extends RecyclerView.Adapter<CardViewViewH
 
     static class CardViewViewHolder extends RecyclerView.ViewHolder {
 
-        CardView mCardView;
+        View mRootView;
         TextView mIdTextView;
         TextView mDateTextView;
         TextView mTextTextView;
 
         public CardViewViewHolder(View view) {
             super(view);
-            mCardView = (CardView) view;
-            mIdTextView = (TextView) mCardView.findViewById(R.id.id_text_view);
-            mDateTextView = (TextView) mCardView.findViewById(R.id.date_text_view);
-            mTextTextView = (TextView) mCardView.findViewById(R.id.text_text_view);
+            mRootView = view;
+            mIdTextView = (TextView) mRootView.findViewById(R.id.id_text_view);
+            mDateTextView = (TextView) mRootView.findViewById(R.id.date_text_view);
+            mTextTextView = (TextView) mRootView.findViewById(R.id.text_text_view);
         }
 
         public void updateByQuoteEntity(QuoteEntity entity) {

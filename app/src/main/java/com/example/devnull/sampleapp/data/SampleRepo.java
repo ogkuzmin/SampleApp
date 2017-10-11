@@ -7,15 +7,10 @@ import java.util.List;
 
 public interface SampleRepo {
 
-    interface Listener {
-        void onRepoChanged();
-    }
-
     List<SampleEntity> getAll();
     SampleEntity getById(int id);
     boolean insert(SampleEntity entity);
     boolean update(SampleEntity entity);
     boolean delete(SampleEntity entity);
     int getMaxId();
-    void addListener(Listener listener);
 }

@@ -94,9 +94,4 @@ public class SampleRepoImpl implements SampleRepo {
         Log.d(LOG_TAG, "::getMaxId() returns " + id);
         return id;
     }
-
-    @Override
-    public void addListener(Listener listener) {
-
-    }
 }
