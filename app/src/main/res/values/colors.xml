@@ -6,4 +6,7 @@
     <color name="accent_material_light">#002699</color>
     <color name="primary_material_dark">#3f51b5</color>
     <color name="non_active_grey_text">#607D8B</color>
+    <color name="fab_normal">#E91E63</color>
+    <color name="fab_pressed">#EC407A</color>
+    <color name="fab_ripple">#AD1457</color>
 </resources>

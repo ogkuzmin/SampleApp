@@ -27,4 +27,5 @@
     <string name="english_language_value">Английский</string>
     <string name="default_language_value">По умолчанию</string>
     <string name="changed_after_reboot_dialog_message">Изменения в языке интерфейса будут активированы после перезагрузки приложения</string>
+    <string name="take_photo_fail_text">Ошибка в получении фотоизображения</string>
 </resources>

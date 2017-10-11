@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
 
     <GridView
         android:id="@+id/grid_view_container"
@@ -16,5 +16,40 @@
         android:verticalSpacing="@dimen/grid_between_item_spacing"
         android:paddingLeft="@dimen/grid_left_right_padding"
         android:paddingRight="@dimen/grid_left_right_padding"/>
+    
+    <com.github.clans.fab.FloatingActionMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab_menu"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/standard_margin"
+        android:layout_marginRight="@dimen/standard_margin"
+        fab:menu_icon="@drawable/fab_add"
+        fab:menu_colorNormal="@color/fab_normal"
+        fab:menu_colorPressed="@color/fab_pressed"
+        fab:menu_colorRipple="@color/fab_ripple">
 
-</LinearLayout>
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fab_take_photo"
+            android:src="@drawable/ic_camera_icon"
+            fab:fab_size="mini"
+            fab:fab_colorNormal="@color/fab_normal"
+            fab:fab_colorPressed="@color/fab_pressed"
+            fab:fab_colorRipple="@color/fab_ripple"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fab_choose_from_gallery"
+            android:src="@drawable/ic_image_gallery"
+            fab:fab_size="mini"
+            fab:fab_colorNormal="@color/fab_normal"
+            fab:fab_colorPressed="@color/fab_pressed"
+            fab:fab_colorRipple="@color/fab_ripple"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</RelativeLayout>

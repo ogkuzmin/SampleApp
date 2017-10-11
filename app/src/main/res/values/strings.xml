@@ -31,4 +31,6 @@
     <string name="english_language_value">English</string>
     <string name="russian_language_value">Russian</string>
     <string name="changed_after_reboot_dialog_message">Selected language will be enabled after reboot of the application.</string>
+
+    <string name="take_photo_fail_text">Taking photo failed</string>
 </resources>

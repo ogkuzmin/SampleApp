@@ -43,4 +43,6 @@
     <dimen name="grid_between_item_spacing">4dp</dimen>
     <dimen name="grid_left_right_padding">8dp</dimen>
     <dimen name="grid_item_width">180dp</dimen>
+    <dimen name="thumbnail_width">120dp</dimen>
+    <dimen name="thumbnail_height">214dp</dimen>
 </resources>

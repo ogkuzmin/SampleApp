@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.devnull.sampleapp.R;
+import com.example.devnull.sampleapp.presentation.Gallery.GalleryFragment;
 import com.example.devnull.sampleapp.presentation.dataloading.DataLoadingFragment;
 import com.example.devnull.sampleapp.presentation.languagepreference.LanguagePreferenceFragment;
 import com.example.devnull.sampleapp.presentation.samplelist.SampleListFragment;
@@ -138,7 +139,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
                 fragment = new SampleListFragment();
                 break;
             case 1:
-                fragment = new Fragment();
+                fragment = new GalleryFragment();
                 break;
             case 2:
                 fragment = new DataLoadingFragment();
