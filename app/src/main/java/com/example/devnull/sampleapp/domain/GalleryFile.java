@@ -2,10 +2,6 @@ package com.example.devnull.sampleapp.domain;
 
 import java.io.File;
 
-/**
- * Created by okuzmin on 11.10.17.
- */
-
 public class GalleryFile {
 
     private File mFile;

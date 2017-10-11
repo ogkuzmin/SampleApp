@@ -39,4 +39,8 @@
     <integer name="max_line_numbers_in_quote">4</integer>
 
     <dimen name="card_corner_radius">4dp</dimen>
+
+    <dimen name="grid_between_item_spacing">4dp</dimen>
+    <dimen name="grid_left_right_padding">8dp</dimen>
+    <dimen name="grid_item_width">180dp</dimen>
 </resources>
