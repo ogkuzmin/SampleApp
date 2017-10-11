@@ -71,7 +71,7 @@ public class GalleryFragment extends MvpFragment<GalleryView, GalleryPresenter> 
 
     @Override
     public void showFailToast() {
-        Toast.makeText(getContext(), R.string.take_photo_fail_text, Toast.LENGTH_LONG);
+        Toast.makeText(getContext(), R.string.take_photo_fail_text, Toast.LENGTH_LONG).show();
     }
 
     @Override

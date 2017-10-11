@@ -35,6 +35,8 @@ public class GalleryPresenter extends MvpBasePresenter<GalleryView> {
 
     private static final String LOG_TAG = GalleryPresenter.class.getSimpleName();
 
+    private static final String APP_NAME = "SampleApp";
+
     static final int REQUEST_TAKE_PHOTO = 1;
     private File mAllocationPendingFile;
 
@@ -46,7 +48,7 @@ public class GalleryPresenter extends MvpBasePresenter<GalleryView> {
     }
 
     public void performTakePhotoButtonClick(Context context) {
-
+        dispatchTakePictureIntent(context);
     }
 
     public void performChooseFromGalleryButtonClick(Context context) {
@@ -59,7 +61,11 @@ public class GalleryPresenter extends MvpBasePresenter<GalleryView> {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), APP_NAME);
+        if (!storageDir.exists()) {
+            storageDir.mkdirs();
+        }
+        Log.d(LOG_TAG, "Trying to create tempFile in " + storageDir.getAbsolutePath());
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -80,6 +86,8 @@ public class GalleryPresenter extends MvpBasePresenter<GalleryView> {
             } catch (IOException ex) {
                 // Error occurred while creating the File
                 Log.e(LOG_TAG, "Exception in creating image file " + ex);
+                getView().showFailToast();
+                return;
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
