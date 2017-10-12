@@ -3,6 +3,7 @@ package com.example.devnull.sampleapp.presentation.Gallery;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,10 @@ import java.util.List;
  * Created by okuzmin on 06.10.17.
  */
 
-public class GalleryFragment extends MvpFragment<GalleryView, GalleryPresenter> implements GalleryView {
+public class GalleryFragment extends MvpFragment<GalleryView, GalleryPresenter> implements GalleryView,
+        View.OnClickListener {
+
+    private static final String LOG_TAG = GalleryFragment.class.getSimpleName();
 
     private GridView mGridView;
     private GalleryGridViewAdapter mAdapter;
@@ -41,10 +45,14 @@ public class GalleryFragment extends MvpFragment<GalleryView, GalleryPresenter> 
 
         mGridView = (GridView) view.findViewById(R.id.grid_view_container);
         mAdapter = new GalleryGridViewAdapter(getContext(), R.layout.gallery_item_layout);
+        mGridView.setAdapter(mAdapter);
         mFabMenu = (FloatingActionMenu) view.findViewById(R.id.fab_menu);
         mFabTakePhoto = (FloatingActionButton) view.findViewById(R.id.fab_take_photo);
         mFabChooseFromGallery = (FloatingActionButton) view.findViewById(R.id.fab_choose_from_gallery);
-        mFabTakePhoto.setOnClickListener(clickView -> presenter.performTakePhotoButtonClick(clickView.getContext()));
+        mFabTakePhoto.setOnClickListener(clickView -> {
+            mFabMenu.hideMenu(true);
+            presenter.performTakePhotoButtonClick(clickView.getContext());
+        });
     }
 
     @Override
@@ -76,7 +84,20 @@ public class GalleryFragment extends MvpFragment<GalleryView, GalleryPresenter> 
 
     @Override
     public void setData(List<GalleryFile> data) {
+        Log.d(LOG_TAG, "::setData");
+        mAdapter.clear();
         mAdapter.setData(data);
         mAdapter.notifyDataSetChanged();
+        mGridView.invalidateViews();
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.image_delete_button:
+                //todo delete image
+                break;
+        }
     }
 }

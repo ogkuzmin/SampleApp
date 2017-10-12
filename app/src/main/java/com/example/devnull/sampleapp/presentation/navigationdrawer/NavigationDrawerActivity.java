@@ -69,12 +69,15 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_bar_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        if (savedInstanceState == null) {
+            initFragmentByPosition(mSelectedPosition);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        initFragmentByPosition(mSelectedPosition);
     }
 
     @Override
