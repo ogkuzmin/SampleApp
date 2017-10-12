@@ -8,13 +8,16 @@
         android:id="@+id/grid_view_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/standard_margin"
-        android:layout_marginRight="@dimen/standard_margin"
+        android:layout_marginLeft="@dimen/grid_between_item_spacing"
+        android:layout_marginRight="@dimen/grid_between_item_spacing"
+        android:layout_marginTop="@dimen/grid_between_item_spacing"
         android:layout_centerHorizontal="true"
         android:horizontalSpacing="@dimen/grid_between_item_spacing"
         android:verticalSpacing="@dimen/grid_between_item_spacing"
         android:clipToPadding="true"
-        android:numColumns="auto_fit"/>
+        android:stretchMode="columnWidth"
+        android:numColumns="2"
+        android:scrollbars="vertical"/>
     
     <com.github.clans.fab.FloatingActionMenu
         android:layout_width="wrap_content"

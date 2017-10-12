@@ -47,6 +47,8 @@ public class GalleryRepoImpl implements GalleryRepo {
         return list;
     }
 
+
+
     @Override
     public boolean delete(GalleryFile file) {
         Realm realm = Realm.getDefaultInstance();
@@ -72,5 +74,18 @@ public class GalleryRepoImpl implements GalleryRepo {
         realm.close();
         Log.d(LOG_TAG, "::getMaxId() returns " + id);
         return id;
+    }
+
+    @Override
+    public boolean deleteById(long id) {
+        Log.d(LOG_TAG, "::deleteById() trying to delete by id " + id);
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        boolean result = realm.where(GalleryRealmDto.class).equalTo(GalleryRealmDto.ID_FIELD_NAME, (int)id).
+                findAll().deleteFirstFromRealm();
+        realm.commitTransaction();
+        realm.close();
+        Log.d(LOG_TAG, "::deleteById() result is " + result);
+        return true;
     }
 }

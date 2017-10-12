@@ -1,7 +1,6 @@
 package com.example.devnull.sampleapp.presentation.addnewsampleitem;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.util.Log;
@@ -14,6 +13,7 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
@@ -33,8 +33,11 @@ public class EditOrAddItemPresenter extends MvpBasePresenter<EditOrAddItemView> 
     @Inject
     SampleRepo mRepo;
 
+    private final Scheduler.Worker mIoWorker;
+
     public EditOrAddItemPresenter() {
         DaggerSampleRepoComponent.builder().build().inject(this);
+        mIoWorker = Schedulers.io().createWorker();
         Log.d(LOG_TAG, "::constructor");
     }
 
@@ -53,10 +56,12 @@ public class EditOrAddItemPresenter extends MvpBasePresenter<EditOrAddItemView> 
         if (mId == DEFAULT_ID_VALUE) {
             setDataToViewAndShowContent(null);
         } else {
-            Observable.just(mRepo.getById(mId)).
-                    subscribeOn(Schedulers.newThread()).
-                    observeOn(AndroidSchedulers.mainThread()).
-                    subscribe(data -> setDataToViewAndShowContent(data));
+            mIoWorker.schedule(() -> {
+                Observable.just(mRepo.getById(mId))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(data -> setDataToViewAndShowContent(data));
+            });
         }
     }
 
@@ -83,19 +88,14 @@ public class EditOrAddItemPresenter extends MvpBasePresenter<EditOrAddItemView> 
     }
 
     private void insertNewObject(final String enteredText) {
-        final Function<Integer, Boolean> databaseFunction = (max) -> {
-                SampleEntity entity = new SampleEntity(max + 1);
-                entity.setName(enteredText);
-                    return mRepo.insert(entity);
-            };
 
-
-        Single.just(mRepo.getMaxId())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.computation())
-                .map(max -> databaseFunction.apply(max))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((Boolean v) -> getView().closeView());
+        mIoWorker.schedule(() -> {
+            int max = mRepo.getMaxId();
+            SampleEntity entity = new SampleEntity(max + 1);
+            entity.setName(enteredText);
+            mRepo.insert(entity);
+            AndroidSchedulers.mainThread().createWorker().schedule(() -> getView().closeView());
+        });
     }
 
     private void updateDataObject(final String enteredText) {

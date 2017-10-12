@@ -44,26 +44,31 @@ public class GalleryFragment extends MvpFragment<GalleryView, GalleryPresenter> 
         super.onViewCreated(view, savedInstanceState);
 
         mGridView = (GridView) view.findViewById(R.id.grid_view_container);
-        mAdapter = new GalleryGridViewAdapter(getContext(), R.layout.gallery_item_layout);
+        mAdapter = new GalleryGridViewAdapter(getContext(), R.layout.gallery_item_layout, this);
         mGridView.setAdapter(mAdapter);
         mFabMenu = (FloatingActionMenu) view.findViewById(R.id.fab_menu);
         mFabTakePhoto = (FloatingActionButton) view.findViewById(R.id.fab_take_photo);
         mFabChooseFromGallery = (FloatingActionButton) view.findViewById(R.id.fab_choose_from_gallery);
         mFabTakePhoto.setOnClickListener(clickView -> {
-            mFabMenu.hideMenu(true);
+            mFabMenu.close(true);
             presenter.performTakePhotoButtonClick(clickView.getContext());
+        });
+        mFabChooseFromGallery.setOnClickListener(clickView -> {
+            mFabMenu.close(true);
+            presenter.performChooseFromGalleryButtonClick(getContext());
         });
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(LOG_TAG, "::onResume " + Thread.currentThread());
         presenter.loadData(getContext());
     }
 
     @Override
     public GalleryPresenter createPresenter() {
-        return new GalleryPresenter();
+        return new GalleryPresenter(getContext());
     }
 
     @Override
@@ -85,18 +90,29 @@ public class GalleryFragment extends MvpFragment<GalleryView, GalleryPresenter> 
     @Override
     public void setData(List<GalleryFile> data) {
         Log.d(LOG_TAG, "::setData");
-        mAdapter.clear();
         mAdapter.setData(data);
         mAdapter.notifyDataSetChanged();
-        mGridView.invalidateViews();
     }
 
     @Override
     public void onClick(View view) {
 
+        Log.d(LOG_TAG, "::onClick");
+
+        GalleryGridViewAdapter.ViewHolder holder = null;
+
         switch (view.getId()) {
             case R.id.image_delete_button:
-                //todo delete image
+                Log.d(LOG_TAG, "::onClick clicked delete button");
+                holder = (GalleryGridViewAdapter.ViewHolder) ((View) view.getParent()).getTag();
+                presenter.deleteGalleryFileById(holder.id);
+                presenter.loadData(getContext());
+                break;
+
+            case R.id.image_container:
+                Log.d(LOG_TAG, "::onClick clicked image container");
+                holder = (GalleryGridViewAdapter.ViewHolder) ((View) view.getParent()).getTag();
+                presenter.performShowImage(getContext(), holder.path);
                 break;
         }
     }

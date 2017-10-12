@@ -16,6 +16,7 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -29,6 +30,7 @@ public class DataLoadingPresenter extends MvpBasePresenter<DataLoadingView> {
     private static final String LOG_TAG = DataLoadingPresenter.class.getSimpleName();
 
     private SampleXmlServer mServer;
+    private final Scheduler.Worker mIoWorker;
 
     private final SingleObserver<ResultXml> mObserver = new SingleObserver<ResultXml>() {
         @Override
@@ -51,9 +53,14 @@ public class DataLoadingPresenter extends MvpBasePresenter<DataLoadingView> {
 
     public DataLoadingPresenter() {
         mServer = SampleXmlServer.getInstance();
+        mIoWorker = Schedulers.io().createWorker();
     }
 
     public void loadData() {
+        mIoWorker.schedule(() -> asyncLoadData());
+    }
+
+    private void asyncLoadData() {
         mServer.getQuoteList()
                 .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())

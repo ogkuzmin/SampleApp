@@ -14,4 +14,5 @@ public interface GalleryRepo {
     List<GalleryFile> getAll();
     boolean delete(GalleryFile file);
     int getMaxId();
+    boolean deleteById(long id);
 }

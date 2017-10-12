@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.devnull.sampleapp.R;
@@ -24,12 +25,14 @@ public class GalleryGridViewAdapter extends ArrayAdapter<GalleryFile> {
     private List<GalleryFile> mData;
     private int mLayoutResourse;
     private Context mContext;
+    private View.OnClickListener mListener;
 
 
-    public GalleryGridViewAdapter(@NonNull Context context, @LayoutRes int resource) {
+    public GalleryGridViewAdapter(@NonNull Context context, @LayoutRes int resource, View.OnClickListener listener) {
         super(context, resource);
         mContext = context;
         mLayoutResourse = resource;
+        mListener = listener;
     }
 
     @Nullable
@@ -51,7 +54,9 @@ public class GalleryGridViewAdapter extends ArrayAdapter<GalleryFile> {
             convertView = LayoutInflater.from(mContext).inflate(mLayoutResourse, parent, false);
             holder = new ViewHolder();
             holder.image = (ImageView) convertView.findViewById(R.id.image_container);
-            holder.image.setScaleType(ImageView.ScaleType.MATRIX);
+            holder.image.setOnClickListener(mListener);
+            holder.deleteButton = (ImageButton) convertView.findViewById(R.id.image_delete_button) ;
+            holder.deleteButton.setOnClickListener(mListener);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -64,6 +69,8 @@ public class GalleryGridViewAdapter extends ArrayAdapter<GalleryFile> {
             return null;
         }
 
+        holder.id = galleryFile.getId();
+        holder.path = galleryFile.getFile().getPath();
         holder.image.setImageDrawable(new BitmapDrawable(mContext.getResources(), galleryFile.getThumbnail()));
         return convertView;
     }
@@ -82,5 +89,8 @@ public class GalleryGridViewAdapter extends ArrayAdapter<GalleryFile> {
 
     static class ViewHolder {
         ImageView image;
+        ImageButton deleteButton;
+        long id;
+        String path;
     }
 }

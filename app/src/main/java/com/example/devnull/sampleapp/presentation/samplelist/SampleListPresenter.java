@@ -19,6 +19,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -33,17 +34,24 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> {
     @Inject
     SampleRepo mRepo;
 
+    private final Scheduler.Worker mIoWorker;
+
     private SampleItemView mLongClickedItemView;
 
     public SampleListPresenter() {
         SampleRepoComponent component = DaggerSampleRepoComponent.builder().build();
         component.inject(this);
+        mIoWorker = Schedulers.io().createWorker();
         Log.d(LOG_TAG, "Constructor");
     }
 
     @UiThread
     public void requestDataAndSetToView() {
         getView().showLoading(false);
+        mIoWorker.schedule(() -> asyncRequestDataAndSetToView());
+    }
+
+    private void asyncRequestDataAndSetToView() {
         Single.just(mRepo.getAll())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -92,30 +100,30 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> {
         }
     }
 
+    @UiThread
     private void performUpdateEntityWithCheckBoxEvent(final SampleItemView itemView) {
         final SampleEntity entity = itemView.getEntity();
         entity.swapChecked();
         itemView.updateView();
 
-        Completable.fromAction(() -> mRepo.update(entity))
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+       mIoWorker.schedule(() -> mRepo.update(entity));
     }
 
+    @UiThread
     public void performLongClick(View view) {
         mLongClickedItemView = (SampleItemView) view.getParent().getParent();
         getView().showPopupMenu(mLongClickedItemView);
     }
 
+    @UiThread
     public void performEditAction() {
         startAddingActivity(mLongClickedItemView.getContext(), mLongClickedItemView);
     }
 
+    @UiThread
     public void performDeleteAction() {
-        Completable.fromAction(() -> mRepo.delete(mLongClickedItemView.getEntity()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> requestDataAndSetToView());
+       mIoWorker.schedule(() -> { mRepo.delete(mLongClickedItemView.getEntity());
+           AndroidSchedulers.mainThread().createWorker().schedule(() -> requestDataAndSetToView());
+       });
     }
 }
