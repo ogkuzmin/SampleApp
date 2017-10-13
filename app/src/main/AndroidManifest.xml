@@ -44,7 +44,10 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         </activity>
-        <activity android:name=".presentation.addnewsampleitem.EditOrAddItemActivity"/>
+        <activity android:name=".presentation.addnewsampleitem.EditOrAddItemActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.gallery.fullscreenimageviewer.FullScreenImageViewerActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

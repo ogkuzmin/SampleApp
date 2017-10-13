@@ -1,4 +1,4 @@
-package com.example.devnull.sampleapp.presentation.Gallery;
+package com.example.devnull.sampleapp.presentation.gallery;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import com.example.devnull.sampleapp.R;
 import com.example.devnull.sampleapp.data.GalleryRepo;
 import com.example.devnull.sampleapp.di.DaggerGalleryRepoComponent;
 import com.example.devnull.sampleapp.domain.GalleryFile;
+import com.example.devnull.sampleapp.presentation.gallery.fullscreenimageviewer.FullScreenImageViewerActivity;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import java.io.File;
@@ -36,6 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.devnull.sampleapp.presentation.gallery.fullscreenimageviewer.FullScreenImageViewerActivity.IMAGE_PATH_EXTRA_KEY_NAME;
 
 public class GalleryPresenter extends MvpBasePresenter<GalleryView> {
 
@@ -212,9 +214,8 @@ public class GalleryPresenter extends MvpBasePresenter<GalleryView> {
     }
 
     public void performShowImage(Context context, String path) {
-        Uri photoURI = Uri.parse("content://" + path);
-        Intent intent = new Intent(Intent.ACTION_VIEW, photoURI);
-        intent.setType("image/*");
+        Intent intent = new Intent(context, FullScreenImageViewerActivity.class);
+        intent.putExtra(IMAGE_PATH_EXTRA_KEY_NAME, path);
         context.startActivity(intent);
     }
 }

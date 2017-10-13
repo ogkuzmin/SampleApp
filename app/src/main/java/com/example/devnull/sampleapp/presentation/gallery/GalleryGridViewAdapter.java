@@ -1,4 +1,4 @@
-package com.example.devnull.sampleapp.presentation.Gallery;
+package com.example.devnull.sampleapp.presentation.gallery;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;

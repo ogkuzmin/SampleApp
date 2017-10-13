@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Interface to repo which saves path to image files selected to be viewed in
- * {@link com.example.devnull.sampleapp.presentation.Gallery.GalleryFragment}
+ * {@link com.example.devnull.sampleapp.presentation.gallery.GalleryFragment}
  */
 public interface GalleryRepo {
 

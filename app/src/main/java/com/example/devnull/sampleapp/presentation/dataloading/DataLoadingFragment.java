@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.devnull.sampleapp.R;
 import com.example.devnull.sampleapp.domain.QuoteEntity;
@@ -23,6 +25,7 @@ public class DataLoadingFragment extends MvpFragment<DataLoadingView, DataLoadin
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private QuoteRecyclerViewAdapter mRecyclerViewAdapter;
+    private LinearLayout mErrorView;
 
     @Nullable
     @Override
@@ -35,6 +38,8 @@ public class DataLoadingFragment extends MvpFragment<DataLoadingView, DataLoadin
         super.onViewCreated(view, savedInstanceState);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_widget);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        mErrorView = (LinearLayout) view.findViewById(R.id.error_view);
+        mErrorView.setVisibility(View.GONE);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_content_frame);
         mRecyclerViewAdapter = new QuoteRecyclerViewAdapter();
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
@@ -49,19 +54,28 @@ public class DataLoadingFragment extends MvpFragment<DataLoadingView, DataLoadin
 
     @Override
     public void onRefresh() {
+        if (mErrorView.getVisibility() == View.VISIBLE) {
+            mErrorView.setVisibility(View.GONE);
+        }
+
         mSwipeRefreshLayout.setRefreshing(true);
         presenter.loadData();
     }
 
     @Override
     public void showContent() {
+        if (mRecyclerView.getVisibility() != View.VISIBLE) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
         mRecyclerViewAdapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showError(Throwable throwable) {
-
+        mSwipeRefreshLayout.setRefreshing(false);
+        mRecyclerView.setVisibility(View.GONE);
+        mErrorView.setVisibility(View.VISIBLE);
     }
 
     @Override

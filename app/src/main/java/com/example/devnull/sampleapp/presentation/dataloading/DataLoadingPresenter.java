@@ -47,7 +47,7 @@ public class DataLoadingPresenter extends MvpBasePresenter<DataLoadingView> {
         @Override
         public void onError(@NonNull Throwable e) {
             Log.d(LOG_TAG, "SingleObserver::onError() " + e.toString());
-            getView().showError(e);
+            AndroidSchedulers.mainThread().createWorker().schedule(() -> getView().showError(e));
         }
     };
 

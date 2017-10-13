@@ -26,6 +26,8 @@
     <string name="edit_action_popup_title">Edit</string>
     <string name="delete_action_popup_title">Delete</string>
 
+    <string name="failed_data_loading_message">Failed to get data from Internet. Improve your connection and try again.</string>
+
     <string name="language_preference_title">Select language</string>
     <string name="language_preference">Languages</string>
     <string name="default_language_value">Default</string>
