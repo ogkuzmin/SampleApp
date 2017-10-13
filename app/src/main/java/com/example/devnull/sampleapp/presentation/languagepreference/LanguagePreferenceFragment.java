@@ -65,7 +65,8 @@ public class LanguagePreferenceFragment extends MvpFragment<LanguagePreferenceVi
     @Override
     public void showChangesAfterRebootDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage(getResources().getString(R.string.changed_after_reboot_dialog_message));
+        builder.setTitle(R.string.changed_after_reboot_dialog_title);
+        builder.setMessage(R.string.changed_after_reboot_dialog_message);
         builder.setCancelable(true);
         mAlertDialog = builder.create();
         mAlertDialog.show();

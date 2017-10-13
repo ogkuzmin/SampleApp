@@ -43,6 +43,8 @@ public class SampleEntity {
             return false;
         if (((SampleEntity) obj).mId != mId)
             return false;
+        if (!((SampleEntity) obj).mName.equals(mName))
+            return false;
 
         return true;
     }

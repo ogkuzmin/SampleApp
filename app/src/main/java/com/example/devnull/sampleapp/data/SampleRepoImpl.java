@@ -24,6 +24,7 @@ public class SampleRepoImpl implements SampleRepo {
 
     @Override
     public List<SampleEntity> getAll() {
+        Log.d(LOG_TAG, "::getAll starts");
         Realm realm = Realm.getDefaultInstance();
         RealmResults<SampleRealmDto> results = realm.where(SampleRealmDto.class).findAll();
         List<SampleEntity> list = new ArrayList<SampleEntity>();
@@ -59,12 +60,14 @@ public class SampleRepoImpl implements SampleRepo {
 
     @Override
     public boolean update(SampleEntity entity) {
+        Log.d(LOG_TAG, "::update starts");
         Realm realm = Realm.getDefaultInstance();
         SampleRealmDto dto = SampleRealmDto.createFromEntity(entity);
         realm.beginTransaction();
         realm.insertOrUpdate(dto);
         realm.commitTransaction();
         realm.close();
+        Log.d(LOG_TAG, "::update finishes");
         return true;
     }
 

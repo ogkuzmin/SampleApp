@@ -55,6 +55,7 @@ public class SampleListFragment extends
         Log.v(LOG_TAG, "::onResume()");
     }
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.sample_list_fragment_menu, menu);
@@ -109,6 +110,7 @@ public class SampleListFragment extends
 
     @Override
     public void showContent() {
+        contentView.invalidate();
         mAdapter.notifyDataSetChanged();
         dismissProgressBarAndShowRecyclerView();
     }

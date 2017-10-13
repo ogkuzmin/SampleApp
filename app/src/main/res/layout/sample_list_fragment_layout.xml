@@ -9,13 +9,15 @@
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/loadingView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="visible">
 
         <ProgressBar
             android:layout_width="@dimen/progress_bar_in_dialog_size"

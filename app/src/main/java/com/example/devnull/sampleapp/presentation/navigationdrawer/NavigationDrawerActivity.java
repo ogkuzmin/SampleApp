@@ -28,7 +28,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
     private final static String LOG_TAG = NavigationDrawerActivity.class.getSimpleName();
 
-    private String[] mPlanetTitles;
+    private String[] mFragmentTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -43,13 +43,20 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        mPlanetTitles = getResources().getStringArray(R.array.navigation_drawer_items_name);
+        if (mFragmentTitles == null) {
+            mFragmentTitles = new String[] {
+                    getResources().getString(R.string.data_list_fragment_title),
+                    getResources().getString(R.string.gallery_fragment_title),
+                    getResources().getString(R.string.data_loading_fragment_tile),
+                    getResources().getString(R.string.language_pref_fragment_title),
+            };
+        }
 
         // Set the adapter for the list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.navigation_drawer_element,
                 R.id.navigation_item_text_view,
-                mPlanetTitles));
+                mFragmentTitles));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
@@ -159,7 +166,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
-        getSupportActionBar().setTitle(mPlanetTitles[position]);
+        getSupportActionBar().setTitle(mFragmentTitles[position]);
     }
 
 

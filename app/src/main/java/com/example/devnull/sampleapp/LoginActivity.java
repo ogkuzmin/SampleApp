@@ -1,16 +1,16 @@
 package com.example.devnull.sampleapp;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 
 import com.example.devnull.sampleapp.presentation.navigationdrawer.NavigationDrawerActivity;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
 
     private Button mLoginButton;
@@ -19,6 +19,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
 
         mLoginButton = (Button) findViewById(R.id.loginButton);
@@ -52,7 +53,7 @@ public class LoginActivity extends Activity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                Thread.currentThread().sleep(3000);
+                Thread.currentThread().sleep(1500);
             } catch (InterruptedException ex) {
                 Log.e(LOG_TAG, "Current thread was interrupted! ");
             }

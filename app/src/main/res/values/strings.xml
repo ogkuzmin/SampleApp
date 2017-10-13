@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">SampleApp</string>
+    <string name="app_name">Sample App</string>
     <string name="file_provider_authority" translatable="false">com.devnull.android.fileprovider</string>
     <string name="login_button_title">Login</string>
-    <string-array name="navigation_drawer_items_name">
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-    </string-array>
+
+    <string name="data_list_fragment_title">Data list</string>
+    <string name="gallery_fragment_title">Gallery</string>
+    <string name="data_loading_fragment_tile">Data list from server</string>
+    <string name="language_pref_fragment_title">Language preference</string>
+
     <string name="progress_dialog_title">Please wait, login is in progress...</string>
 
     <string name="drawer_open" translatable="false">Open navigation drawer</string>
@@ -33,6 +33,7 @@
     <string name="default_language_value">Default</string>
     <string name="english_language_value">English</string>
     <string name="russian_language_value">Russian</string>
+    <string name="changed_after_reboot_dialog_title">Language change</string>
     <string name="changed_after_reboot_dialog_message">Selected language will be enabled after reboot of the application.</string>
 
     <string name="take_photo_fail_text">Taking photo failed</string>

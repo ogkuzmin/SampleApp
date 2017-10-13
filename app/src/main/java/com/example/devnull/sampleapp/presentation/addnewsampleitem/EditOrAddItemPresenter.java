@@ -101,11 +101,10 @@ public class EditOrAddItemPresenter extends MvpBasePresenter<EditOrAddItemView> 
     private void updateDataObject(final String enteredText) {
         mData.setName(enteredText);
 
-        Single.just(mRepo.update(mData))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((Boolean v) -> getView().closeView());
+        mIoWorker.schedule(() -> mRepo.update(mData));
+        getView().closeView();
     }
+
 
     public void performRevertButton() {
         getView().closeView();

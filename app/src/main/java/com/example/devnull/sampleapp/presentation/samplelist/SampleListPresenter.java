@@ -52,6 +52,7 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> {
     }
 
     private void asyncRequestDataAndSetToView() {
+
         Single.just(mRepo.getAll())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -86,14 +87,17 @@ public class SampleListPresenter extends MvpBasePresenter<SampleListView> {
     }
 
     public void performClickOnItemView(View view) {
+
         SampleItemView itemView = (SampleItemView) view.getParent().getParent();
 
         switch (view.getId()){
             case R.id.clickable_content_frame:
+                Log.d(LOG_TAG, "::performClickOnItemView() click on content frame");
                 startAddingActivity(view.getContext(), itemView);
                 break;
 
             case R.id.checkbox:
+                Log.d(LOG_TAG, "::performClickOnItemView() click on checkbox");
                 performUpdateEntityWithCheckBoxEvent(itemView);
                 break;
 
